@@ -11,12 +11,24 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
         <link href="CSS/HomePageCss.css" rel="stylesheet">
+        <link href="CSS/HomeContent.css" rel="stylesheet">
     </head>
     <body>
 
         <div class="area">
             <center>
-                asdasd
+                <div id="formContent">                
+                    <h1>Page Name</h1>
+
+                    <!-- Login Form -->
+                    <form action="StudentHome.jsp">
+                        <input type="text" id="login" class="fadeIn second" name="login" placeholder="user name">
+                        <input type="password" id="password" class="fadeIn third" name="login" placeholder="password">
+                        <input type="submit" class="fadeIn fourth" value="Log In">
+                    </form>
+
+
+                </div>
 
             </center>
         </div>
