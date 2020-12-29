@@ -50,11 +50,15 @@ public class SignUpServlet extends HttpServlet {
 
             String password = generateRandomPassword(10);
             //////////////
-            String gRecaptchaResponse = request
-                    .getParameter("g-recaptcha-response");
-            System.out.println(gRecaptchaResponse);
-            boolean verify = VerifyRecaptcha.verify(gRecaptchaResponse);
-            
+            boolean verify;
+            try {
+                String gRecaptchaResponse = request
+                        .getParameter("g-recaptcha-response");
+                verify = VerifyRecaptcha.verify(gRecaptchaResponse);
+            } catch (Exception e) {
+                verify = false;
+            }
+
             if (verify) {
                 Connection connection = SqlConnector.getConnection();
                 try {
@@ -79,9 +83,12 @@ public class SignUpServlet extends HttpServlet {
                 } catch (MessagingException ex) {
                     Logger.getLogger(SignUpServlet.class.getName()).log(Level.SEVERE, null, ex);
                 }
+            } else {
+                out.print("ZZ");
             }
         }
     }
+
     private String generateRandomPassword(int len) {
         // ASCII range - alphanumeric (0-9, a-z, A-Z)
         final String chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";

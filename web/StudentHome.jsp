@@ -10,7 +10,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>JSP Page</title>
-        <link href="HomePageCss.css" rel="stylesheet">
+        <link href="CSS/HomePageCss.css" rel="stylesheet">
     </head>
     <body>
 
