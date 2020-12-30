@@ -18,9 +18,10 @@ and open the template in the editor.
                 </div>
 
                 <!-- Login Form -->
-                <form action="StudentHome.jsp">
-                    <input type="text" id="login" class="fadeIn second" name="login" placeholder="user name">
-                    <input type="password" id="password" class="fadeIn third" name="login" placeholder="password">
+                <form action="UserServlet" method="post">
+                    <input type="hidden" name="requestAction" value="login">
+                    <input type="text" id="login" class="fadeIn second" name="userName" placeholder="user name">
+                    <input type="password" id="password" class="fadeIn third" name="password" placeholder="password">
                     <input type="submit" class="fadeIn fourth" value="Log In">
                 </form>
 
