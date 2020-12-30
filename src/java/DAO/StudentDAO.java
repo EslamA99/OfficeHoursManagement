@@ -6,32 +6,28 @@
 package DAO;
 
 import java.util.List;
+import models.Student;
 import models.User;
 
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
-
-
 /**
  * CRUD database operations
+ *
  * @author Ramesh Fadatare
  *
  */
-public class UserDAO {
+public class StudentDAO {
 
-    /**
-     * Save User
-     * @param user
-     */
-    public static void saveUser(User user) {
+    public static void saveStudent(Student student) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             // start a transaction
             transaction = session.beginTransaction();
             // save the student object
-            session.save(user);
-            
+            session.save(student);
+
             // commit transaction
             transaction.commit();
         } catch (Exception e) {
@@ -41,37 +37,14 @@ public class UserDAO {
             e.printStackTrace();
         }
     }
-    /*public User getUser(String userName) {
-        
+
+    public void updateStudnet(Student student) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             // start a transaction
             transaction = session.beginTransaction();
             // save the student object
-            session.save(user);
-            
-            // commit transaction
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction != null) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        }
-        
-    }*/
-
-    /**
-     * Update User
-     * @param user
-     */
-    public void updateUser(User user) {
-        Transaction transaction = null;
-        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
-            // start a transaction
-            transaction = session.beginTransaction();
-            // save the student object
-            session.update(user);
+            session.update(student);
             // commit transaction
             transaction.commit();
         } catch (Exception e) {
@@ -82,22 +55,17 @@ public class UserDAO {
         }
     }
 
-    /**
-     * Delete User
-     * @param id
-     */
-    public void deleteUser(int id) {
+    public void deleteStudent(int id) {
 
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             // start a transaction
             transaction = session.beginTransaction();
 
-            // Delete a user object
-            User user = session.get(User.class, id);
-            if (user != null) {
-                session.delete(user);
-                System.out.println("user is deleted");
+            Student student = session.get(Student.class, id);
+            if (student != null) {
+                session.delete(student);
+                System.out.println("student is deleted");
             }
 
             // commit transaction
@@ -110,22 +78,15 @@ public class UserDAO {
         }
     }
 
-    /**
-     * Get User By ID
-     * @param id
-     * @return
-     */
-    public static User getUser(String userName) {
+    public static Student getStudent(String userName) {
 
         Transaction transaction = null;
-        User user = null;
+        Student student = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             // start a transaction
             transaction = session.beginTransaction();
-            // get an user object
-            user = (User) session.createQuery("FROM User U WHERE U.username = :userName").setParameter("userName", userName)
-                .uniqueResult();
-           // user = session.get(User.class, id);
+            student = (Student) session.createQuery("FROM Student U WHERE U.username = :userName").setParameter("userName", userName)
+                    .uniqueResult();
             // commit transaction
             transaction.commit();
         } catch (Exception e) {
@@ -134,24 +95,19 @@ public class UserDAO {
             }
             e.printStackTrace();
         }
-        return user;
+        return student;
     }
 
-    /**
-     * Get all Users
-     * @return
-     */
     @SuppressWarnings("unchecked")
-    public List < User > getAllUser() {
+    public List< Student> getAllStudent() {
 
         Transaction transaction = null;
-        List < User > listOfUser = null;
+        List< Student> listOfStudents = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             // start a transaction
             transaction = session.beginTransaction();
-            // get an user object
 
-            listOfUser = session.createQuery("from User").getResultList();
+            listOfStudents = session.createQuery("from Student").getResultList();
 
             // commit transaction
             transaction.commit();
@@ -161,6 +117,6 @@ public class UserDAO {
             }
             e.printStackTrace();
         }
-        return listOfUser;
+        return listOfStudents;
     }
 }

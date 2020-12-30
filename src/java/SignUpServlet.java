@@ -5,7 +5,6 @@
  */
 
 import Captcha.VerifyRecaptcha;
-import SQL.SqlConnector;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.security.SecureRandom;
@@ -43,7 +42,7 @@ public class SignUpServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            String userName = request.getParameter("userName");
+            /*String userName = request.getParameter("userName");
             String name = request.getParameter("name");
             String email = request.getParameter("email");
             String phoneNumber = request.getParameter("phoneNumber");
@@ -85,7 +84,7 @@ public class SignUpServlet extends HttpServlet {
                 }
             } else {
                 out.print("ZZ");
-            }
+            }*/
         }
     }
 
