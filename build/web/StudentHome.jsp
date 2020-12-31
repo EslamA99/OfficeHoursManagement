@@ -35,78 +35,35 @@
         <nav class="main-menu">
             <ul>
                 <li>
-                    <a href="http://justinfarrow.com">
-                        <i class="fa fa-picture-o fa-2x"></i>
+                    <a href="StudentHome.jsp">
+                        <i class="fa fa-home fa-2x"></i>
                         <span class="nav-text">
-                            Dashboard
+                            Home
                         </span>
                     </a>
 
                 </li>
                 <li class="has-subnav">
-                    <a href="#">
-                        <i class="fa fa-laptop fa-2x"></i>
+                    <a href="StaffMembers.jsp">
+                        <i class="fa fa-user fa-2x"></i>
                         <span class="nav-text">
-                            Stars Components
+                            Staff Members
                         </span>
                     </a>
-
-                </li>
-                <li class="has-subnav">
-                    <a href="#">
-                        <i class="fa fa-list fa-2x"></i>
-                        <span class="nav-text">
-                            Forms
-                        </span>
-                    </a>
-
-                </li>
-                <li class="has-subnav">
-                    <a href="#">
-                        <i class="fa fa-folder-open fa-2x"></i>
-                        <span class="nav-text">
-                            Pages
-                        </span>
-                    </a>
-
-                </li>
                 <li>
-                    <a href="#">
-                        <i class="fa fa-bar-chart-o fa-2x"></i>
-                        <span class="nav-text">
-                            Graphs and Statistics
-                        </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fa fa-font fa-2x"></i>
-                        <span class="nav-text">
-                            Quotes
-                        </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fa fa-table fa-2x"></i>
-                        <span class="nav-text">
-                            Tables
-                        </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
-                        <i class="fa fa-map-marker fa-2x"></i>
-                        <span class="nav-text">
-                            Maps
-                        </span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#">
+                    <a href="StudentProfile.jsp">
                         <i class="fa fa-info fa-2x"></i>
                         <span class="nav-text">
-                            Documentation
+                            Profile
+                        </span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="test.html">
+                        <i class="fa fa-search fa-2x"></i>
+                        <span class="nav-text">
+                            test
                         </span>
                     </a>
                 </li>

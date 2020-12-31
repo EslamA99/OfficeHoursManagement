@@ -6,7 +6,7 @@
 package DAO;
 
 import java.util.List;
-import models.Student;
+import models.Staff;
 import models.User;
 
 import org.hibernate.Session;
@@ -18,15 +18,15 @@ import org.hibernate.Transaction;
  * @author Ramesh Fadatare
  *
  */
-public class StudentDAO {
+public class StaffDAO {
 
-    public static void saveStudent(Student student) {
+    public static void saveStaff(Staff staff) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             // start a transaction
             transaction = session.beginTransaction();
-            // save the student object
-            session.save(student);
+            // save the staff object
+            session.save(staff);
 
             // commit transaction
             transaction.commit();
@@ -38,13 +38,13 @@ public class StudentDAO {
         }
     }
 
-    public static void updateStudnet(Student student) {
+    public static void updateStaff(Staff staff) {
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             // start a transaction
             transaction = session.beginTransaction();
-            // save the student object
-            session.update(student);
+            // save the staff object
+            session.update(staff);
             // commit transaction
             transaction.commit();
         } catch (Exception e) {
@@ -55,17 +55,17 @@ public class StudentDAO {
         }
     }
 
-    public static void deleteStudent(int id) {
+    public static void deleteStaff(int id) {
 
         Transaction transaction = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             // start a transaction
             transaction = session.beginTransaction();
 
-            Student student = session.get(Student.class, id);
-            if (student != null) {
-                session.delete(student);
-                System.out.println("student is deleted");
+            Staff staff = session.get(Staff.class, id);
+            if (staff != null) {
+                session.delete(staff);
+                System.out.println("staff is deleted");
             }
 
             // commit transaction
@@ -78,14 +78,14 @@ public class StudentDAO {
         }
     }
 
-    public static Student getStudent(String userName) {
+    public static Staff getStaff(String userName) {
 
         Transaction transaction = null;
-        Student student = null;
+        Staff staff = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             // start a transaction
             transaction = session.beginTransaction();
-            student = (Student) session.createQuery("FROM Student U WHERE U.username = :userName").setParameter("userName", userName)
+            staff = (Staff) session.createQuery("FROM Staff U WHERE U.username = :userName").setParameter("userName", userName)
                     .uniqueResult();
             // commit transaction
             transaction.commit();
@@ -95,19 +95,17 @@ public class StudentDAO {
             }
             e.printStackTrace();
         }
-        return student;
+        return staff;
     }
-
-    @SuppressWarnings("unchecked")
-    public static List< Student> getAllStudent() {
+    public static List< Staff> getStaffsWithName(String name) {
 
         Transaction transaction = null;
-        List< Student> listOfStudents = null;
+        List< Staff> listOfStaff = null;
         try (Session session = HibernateUtil.getSessionFactory().openSession()) {
             // start a transaction
             transaction = session.beginTransaction();
 
-            listOfStudents = session.createQuery("from Student").getResultList();
+            listOfStaff = session.createQuery("FROM Staff U WHERE U.name = :name").setParameter("name", name).getResultList();
 
             // commit transaction
             transaction.commit();
@@ -117,6 +115,28 @@ public class StudentDAO {
             }
             e.printStackTrace();
         }
-        return listOfStudents;
+        return listOfStaff;
+    }
+
+    @SuppressWarnings("unchecked")
+    public static List< Staff> getAllstaff() {
+
+        Transaction transaction = null;
+        List< Staff> listOfStaff = null;
+        try (Session session = HibernateUtil.getSessionFactory().openSession()) {
+            // start a transaction
+            transaction = session.beginTransaction();
+
+            listOfStaff = session.createQuery("from Staff").getResultList();
+
+            // commit transaction
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        }
+        return listOfStaff;
     }
 }

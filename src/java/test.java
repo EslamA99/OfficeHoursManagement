@@ -1,6 +1,8 @@
 
-import DAO.StudentDAO;
+import DAO.StaffDAO;
 import DAO.UserDAO;
+import java.util.List;
+import models.Staff;
 import models.Student;
 import models.User;
 
@@ -22,13 +24,15 @@ public class test {
         user.setPassword("test");
         
         UserDAO.saveUser(user);*/
-        User user=UserDAO.getUser("test");
+        /*User user=UserDAO.getUser("test");
         System.out.println(user.getPassword());
-        System.out.println(user.getStaff());
+        System.out.println(user.getStaff());*/
         /*Student student=new Student();
         student.setName("test");
         student.setPhone("011");
         student.setUser(user);
         StudentDAO.saveStudent(student);*/
+        
+        List<Staff> staffMembersList = StaffDAO.getStaffsWithName("aa");
     }
 }

@@ -4,6 +4,7 @@
  * and open the template in the editor.
  */
 
+import DAO.StaffDAO;
 import DAO.UserDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,15 +14,15 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import models.Staff;
 import models.User;
 
 /**
  *
- * @author EEC
+ * @author eslam
  */
-@WebServlet(urlPatterns = {"/UserServlet"})
-public class UserServlet extends HttpServlet {
+@WebServlet(urlPatterns = {"/StaffServlet"})
+public class StaffServlet extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -32,32 +33,26 @@ public class UserServlet extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    HttpSession session;
-
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        session = request.getSession(true);
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
+            /* TODO output your page here. You may use following sample code. */
             String action = request.getParameter("requestAction");
             switch (action) {
-                case "login":
-                    loginUser(request, response);
-                    break;
                 case "insert":
-                    insertUser(request, response);
+                    insertStaff(request, response);
                     break;
                 case "delete":
-                    deleteUser(request, response);
+                    deleteStaff(request, response);
                     break;
                 case "update":
-                    updateUser(request, response);
+                    updateStaff(request, response);
                     break;
                 case "getAll":
-                    getAllUsers(request, response);
+                    getAllStaffs(request, response);
                     break;
             }
-
         }
     }
 
@@ -99,49 +94,41 @@ public class UserServlet extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
-    private void loginUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String userName = request.getParameter("userName");
-        String password = request.getParameter("password");
-
-        User user = UserDAO.getUser(userName);
-        if (user != null) {
-            if (user.getPassword().equals(password)) {
-
-                if (user.getStudent() != null) {
-                    session.setAttribute("currStudent", user.getStudent());
-                    response.sendRedirect("StudentHome.jsp");
-                } else {
-                    session.setAttribute("currStaff", user.getStaff());
-                    response.sendRedirect("StaffHome.jsp");
-                }
-            } else {//wrong pw
-
-            }
-        } else {//user name not found
-
-        }
+private void insertStaff(HttpServletRequest request, HttpServletResponse response) {
+        User user = new User();
+        Staff staff = new Staff();
+        user.setUsername(request.getParameter("userName"));
+        user.setPassword(request.getParameter("password"));
+        user.setEmail(request.getParameter("email"));
+        staff.setName(request.getParameter("name"));
+        staff.setPhone(request.getParameter("phone"));
+        UserDAO.saveUser(user);
+        User user2 = UserDAO.getUser(user.getUsername());
+        staff.setUser(user2);
+        //UserDAO userdao=new UserDAO();
+        StaffDAO.saveStaff(staff);
     }
 
-    private void insertUser(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private void deleteStaff(HttpServletRequest request, HttpServletResponse response) {
+        int id = Integer.parseInt(request.getParameter("id"));
+        StaffDAO.deleteStaff(id);
+        UserDAO.deleteUser(id);
     }
 
-    private void deleteUser(HttpServletRequest request, HttpServletResponse response) {
-        int userId = Integer.parseInt(request.getParameter("userId"));
-        if (UserDAO.deleteUser(userId)) {
-
-        } else {
-
-        }
+    private void updateStaff(HttpServletRequest request, HttpServletResponse response) {
+        User user = new User();
+        Staff staff = new Staff();
+        user.setPassword(request.getParameter("password"));
+        user.setEmail(request.getParameter("email"));
+        staff.setName(request.getParameter("name"));
+        staff.setPhone(request.getParameter("phone"));
+        staff.setUser(user);
+        //UserDAO userdao=new UserDAO();
+        UserDAO.saveUser(user);
+        StaffDAO.saveStaff(staff);
     }
 
-    private void updateUser(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    private void getAllStaffs(HttpServletRequest request, HttpServletResponse response) {
+        List< Staff> listUser = StaffDAO.getAllstaff();
     }
-
-    private void getAllUsers(HttpServletRequest request, HttpServletResponse response) {
-        List<User> users = UserDAO.getAllUser();
-    }
-
 }

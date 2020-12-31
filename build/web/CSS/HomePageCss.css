@@ -15,7 +15,7 @@
 }
 
 
-.main-menu:hover,nav.main-menu.expanded {
+.main-menu:hover ,nav.main-menu.expanded {
     width:250px;
     overflow:visible;
 }
@@ -116,7 +116,7 @@ nav ul,nav li {
     background-color:#5fa2db;
 }
 .area {
-    float: right;
+    
     width: 100%;
     height: 100%;
 }

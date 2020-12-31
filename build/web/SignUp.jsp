@@ -24,22 +24,53 @@
                 </div>
 
                 <!-- Login Form -->
-                <form action="SignUpServlet" method="post">
-                    <input type="text" id="login" class="fadeIn second" name="userName" placeholder="user name">
-                    <input type="text" id="login" class="fadeIn second" name="name" placeholder="name">
-                    <input type="email" id="login" class="fadeIn second" name="email" placeholder="email">
-                    <input type="text" id="login" class="fadeIn second" name="phoneNumber" placeholder="phone number">
+                <form action="SignUpServlet"  onsubmit="return validate()" method="post">
+                    <input type="text" id="userName" class="fadeIn second" name="userName" placeholder="user name">
+                    <input type="text" id="name" class="fadeIn second" name="name" placeholder="name">
+                    <input type="email" id="email" class="fadeIn second" name="email" placeholder="email">
+                    <input type="text" id="phone" class="fadeIn second" name="phoneNumber" placeholder="phone number">
                     <center>
                         <div class="g-recaptcha"
-                         data-sitekey="6LfVWxgaAAAAACSOibK-ELPpcIc49WKLnt2XYn0y"></div>
+                             data-sitekey="6LfVWxgaAAAAACSOibK-ELPpcIc49WKLnt2XYn0y"></div>
                     </center>
-                    
+
                     <input type="submit" class="fadeIn fourth" value="Sign Up">
                 </form>
 
 
             </div>
         </div>
+        <script>
+            function validate() {
+                
+                let userName = document.getElementById("userName").value;
+                if (userName == "") {
+                    alert("user name can't be empty");
+                    return false;
+                }
+                
+                let name = document.getElementById("name").value;
+                if (name == "") {
+                    alert("name can't be empty");
+                    return false;
+                }
+                
+                let email = document.getElementById("email").value;
+                if (email == "") {
+                    alert("email can't be empty");
+                    return false;
+                }
+                
+                let phone = document.getElementById("phone").value;
+                if (phone == "") {
+                    alert("phone can't be empty");
+                    return false;
+                }
+                
+                return true;
+            }
+
+        </script>
     </body>
 </html>
 <!--
