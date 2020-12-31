@@ -4,6 +4,7 @@
     Author     : EEC
 --%>
 
+<%@page import="java.util.LinkedList"%>
 <%@page import="java.util.List"%>
 <%@page import="DAO.StaffDAO"%>
 <%@page import="models.Staff"%>
@@ -17,9 +18,9 @@
     </thead>
     <tbody>
         <%
-            String name = request.getParameter("name");
+            String name = request.getParameter("staffName");
             List<Staff> staffMembersList;
-            if (name.isEmpty()) {
+            if (name==null||name.isEmpty()) {
                 staffMembersList = StaffDAO.getAllstaff();
             } else {
                 staffMembersList = StaffDAO.getStaffsWithName(name);

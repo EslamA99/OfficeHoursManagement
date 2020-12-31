@@ -17,12 +17,7 @@
         <title>JSP Page</title>
         <link href="CSS/TableDesignCss.css" rel="stylesheet">
         <link href="CSS/HomePageCss.css" rel="stylesheet">
-        <!-- 
-         <link href="CSS/HomeContent.css" rel="stylesheet">
-        -->
-
-
-
+        <link href="CSS/HomeContent.css" rel="stylesheet">
         <link href="CSS/SearchBarCss.css" rel="stylesheet">
     </head>
     <body>
@@ -34,18 +29,14 @@
                 <div id="formContent"> 
 
                     <h1>Staff Member</h1>
-                    <form>
-                        
-                        <div class="wrap">
-                            <div class="search">
-                                <input type="text" id="staffName" class="searchTerm" placeholder="Staff member name?">
-                                <input type="submit" onkeyup="showStaff()" class="searchButton">
-                            </div>
+                    <form method="post" onsubmit="showStaff(event)">
+                        <div class="search">
+                            <input type="text" id="staffName" class="searchTerm" placeholder="Find staff?">
+                            <button type="submit" class="searchButton">
+                                <i class="fa fa-search"></i>
+                            </button>
                         </div>
                     </form>
-
-
-                    <div id="gradient"></div>
 
 
                     <center>
@@ -118,16 +109,17 @@
             </ul>
         </nav>
         <script>
-            function showStaff() {
+            function showStaff(e) {
+                e.preventDefault();
                 var xhttp;
-                let name=document.getElementById("name").value;
+                let name = document.getElementById("staffName").value;
                 xhttp = new XMLHttpRequest();
                 xhttp.onreadystatechange = function () {
                     if (this.readyState == 4 && this.status == 200) {
                         document.getElementById("tableData").innerHTML = this.responseText;
                     }
                 };
-                xhttp.open("GET", "StaffMemberSearch.jsp?name=" + name, true);
+                xhttp.open("GET", "StaffMemberSearch.jsp?staffName=" + name, true);
                 xhttp.send();
             }
         </script>
