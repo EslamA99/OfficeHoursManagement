@@ -16,11 +16,11 @@ and open the template in the editor.
                 <div class="fadeIn first">
                     <img src="bussiness-man.svg" id="icon" alt="User Iconsss" />
                 </div>
-
+                   
                 <!-- Login Form -->
-                <form action="UserServlet" method="post">
+                <form action="UserServlet" onsubmit="return validate()" method="post">
                     <input type="hidden" name="requestAction" value="login">
-                    <input type="text" id="login" class="fadeIn second" name="userName" placeholder="user name">
+                    <input type="text" id="userName" class="fadeIn second" name="userName" placeholder="user name">
                     <input type="password" id="password" class="fadeIn third" name="password" placeholder="password">
                     <input type="submit" class="fadeIn fourth" value="Log In">
                 </form>
@@ -32,5 +32,23 @@ and open the template in the editor.
 
             </div>
         </div>
+        <script>
+            function validate() {
+                
+                let userName = document.getElementById("userName").value;
+                if (userName == "") {
+                    alert("user name can't be empty");
+                    return false;
+                }
+                
+                let password = document.getElementById("password").value;
+                if (password == "") {
+                    alert("password can't be empty");
+                    return false;
+                }
+                return true;
+            }
+
+        </script>
     </body>
 </html>

@@ -5,6 +5,7 @@
  */
 
 import Captcha.VerifyRecaptcha;
+import SQL.SqlConnector;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.security.SecureRandom;
@@ -42,13 +43,25 @@ public class SignUpServlet extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            /*String userName = request.getParameter("userName");
+            String userName = request.getParameter("userName");
             String name = request.getParameter("name");
             String email = request.getParameter("email");
-            String phoneNumber = request.getParameter("phoneNumber");
-
+            String phone = request.getParameter("phoneNumber");
+            //String type = request.getParameter("type");
             String password = generateRandomPassword(10);
-            //////////////
+            if (userName == null || userName.isEmpty()) {
+                out.print("user name can't be empty");
+                return;
+            } else if (name == null || name.isEmpty()) {
+                out.print("name can't be empty");
+                return;
+            } else if (email == null || email.isEmpty()) {
+                out.print("email can't be empty");
+                return;
+            } else if (phone == null || phone.isEmpty()) {
+                out.print("phone can't be empty");
+                return;
+            }
             boolean verify;
             try {
                 String gRecaptchaResponse = request
@@ -61,30 +74,59 @@ public class SignUpServlet extends HttpServlet {
             if (verify) {
                 Connection connection = SqlConnector.getConnection();
                 try {
+                    PreparedStatement stmtCheck = connection.prepareStatement("select * from user where user_name=?");
+                    stmtCheck.setString(1, userName);
+                    if (stmtCheck.executeQuery().next()) {
+                        out.print("user name found before");
+                        return;
+                    }
+                    stmtCheck = connection.prepareStatement("select * from user where email=?");
+                    stmtCheck.setString(1, email);
+                    if (stmtCheck.executeQuery().next()) {
+                        out.print("email found before");
+                        return;
+                    }
                     JavaMailMaker.sendPassword(email, password);
-                    PreparedStatement stmt = connection.prepareStatement("insert into user (user_name,email,password) values (?,?,?)");
+                    PreparedStatement stmt = connection.prepareStatement("insert into user (user_name,email,password,name,phone,type) values (?,?,?,?,?,?)");
                     stmt.setString(1, userName);
                     stmt.setString(2, email);
                     stmt.setString(3, password);
-                    int xx = stmt.executeUpdate();
+                    stmt.setString(4, name);
+                    stmt.setString(5, phone);
+                    stmt.setString(6, request.getParameter("type"));
+                    int row = stmt.executeUpdate();
                     stmt = connection.prepareStatement("SELECT MAX(id)FROM user");
                     ResultSet rs = stmt.executeQuery();
                     rs.next();
-                    stmt = connection.prepareStatement("insert into student (user_id,name,phone) values (?,?,?)");
+                    String type = request.getParameter("type");
+                    if (type.equals("student")) {
+                        stmt = connection.prepareStatement("insert into student (user_id) values (?)");
+                        stmt.setInt(1, rs.getInt(1));
+                        int row2 = stmt.executeUpdate();
+                    } else if (type.equals("staff")) {
+                        stmt = connection.prepareStatement("insert into staff (user_id,staff_type) values (?,?)");
+                        stmt.setInt(1, rs.getInt(1));
+                        stmt.setString(2, "Dr");
+                        int row2 = stmt.executeUpdate();
+                    }
+                    /*stmt = connection.prepareStatement("insert into student (user_id,type) values (?,?)");
                     stmt.setInt(1, rs.getInt(1));
-                    stmt.setString(2, name);
-                    stmt.setString(3, phoneNumber);
-                    int zz = stmt.executeUpdate();
+                    stmt.setInt(2,"Dr");
+                    int row2 = stmt.executeUpdate();
+                    response.sendRedirect("index.html");*/
 
-                    response.sendRedirect("index.html");
+                    out.print("go to login");
+
                 } catch (SQLException ex) {
                     Logger.getLogger(SignUpServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    out.print("failed to sign up");
                 } catch (MessagingException ex) {
                     Logger.getLogger(SignUpServlet.class.getName()).log(Level.SEVERE, null, ex);
+                    out.print("message not sent");
                 }
             } else {
-                out.print("ZZ");
-            }*/
+                out.print("wrong captcha");
+            }
         }
     }
 

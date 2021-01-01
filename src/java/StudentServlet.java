@@ -4,8 +4,7 @@
  * and open the template in the editor.
  */
 
-import DAO.StudentDAO;
-import DAO.UserDAO;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -14,8 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import models.Student;
-import models.User;
+
 
 /**
  *
@@ -96,40 +94,19 @@ public class StudentServlet extends HttpServlet {
     }// </editor-fold>
 
     private void insertStudent(HttpServletRequest request, HttpServletResponse response) {
-        User user = new User();
-        Student student = new Student();
-        user.setUsername(request.getParameter("userName"));
-        user.setPassword(request.getParameter("password"));
-        user.setEmail(request.getParameter("email"));
-        student.setName(request.getParameter("name"));
-        student.setPhone(request.getParameter("phone"));
-        UserDAO.saveUser(user);
-        User user2 = UserDAO.getUser(user.getUsername());
-        student.setUser(user2);
-        //UserDAO userdao=new UserDAO();
-        StudentDAO.saveStudent(student);
+        
     }
 
     private void deleteStudent(HttpServletRequest request, HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("id"));
-        StudentDAO.deleteStudent(id);
-        UserDAO.deleteUser(id);
+        
     }
 
     private void updateStudent(HttpServletRequest request, HttpServletResponse response) {
-        User user = new User();
-        Student student = new Student();
-        user.setPassword(request.getParameter("password"));
-        user.setEmail(request.getParameter("email"));
-        student.setName(request.getParameter("name"));
-        student.setPhone(request.getParameter("phone"));
-        student.setUser(user);
-        //UserDAO userdao=new UserDAO();
-        UserDAO.saveUser(user);
-        StudentDAO.saveStudent(student);
+        
     }
 
     private void getAllStudents(HttpServletRequest request, HttpServletResponse response) {
-        List< Student> listUser = StudentDAO.getAllStudent();
+        
     }
 }

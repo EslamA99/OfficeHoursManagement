@@ -5,39 +5,20 @@
  */
 package models;
 
-import java.util.List;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.Table;
 
 /**
  *
  * @author eslam
  */
-@Entity
-@Table(name = "student")
+
 public class Student {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+
     private int id;
 
-    @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id")
     private User user;
-    @Column(name = "name")
     private String name;
 
-    @Column(name = "phone")
     private String phone;
 
     public int getId() {

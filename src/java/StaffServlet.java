@@ -4,8 +4,7 @@
  * and open the template in the editor.
  */
 
-import DAO.StaffDAO;
-import DAO.UserDAO;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
@@ -14,8 +13,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import models.Staff;
-import models.User;
+
 
 /**
  *
@@ -95,40 +93,19 @@ public class StaffServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 private void insertStaff(HttpServletRequest request, HttpServletResponse response) {
-        User user = new User();
-        Staff staff = new Staff();
-        user.setUsername(request.getParameter("userName"));
-        user.setPassword(request.getParameter("password"));
-        user.setEmail(request.getParameter("email"));
-        staff.setName(request.getParameter("name"));
-        staff.setPhone(request.getParameter("phone"));
-        UserDAO.saveUser(user);
-        User user2 = UserDAO.getUser(user.getUsername());
-        staff.setUser(user2);
-        //UserDAO userdao=new UserDAO();
-        StaffDAO.saveStaff(staff);
+        
     }
 
     private void deleteStaff(HttpServletRequest request, HttpServletResponse response) {
         int id = Integer.parseInt(request.getParameter("id"));
-        StaffDAO.deleteStaff(id);
-        UserDAO.deleteUser(id);
+        
     }
 
     private void updateStaff(HttpServletRequest request, HttpServletResponse response) {
-        User user = new User();
-        Staff staff = new Staff();
-        user.setPassword(request.getParameter("password"));
-        user.setEmail(request.getParameter("email"));
-        staff.setName(request.getParameter("name"));
-        staff.setPhone(request.getParameter("phone"));
-        staff.setUser(user);
-        //UserDAO userdao=new UserDAO();
-        UserDAO.saveUser(user);
-        StaffDAO.saveStaff(staff);
+        
     }
 
     private void getAllStaffs(HttpServletRequest request, HttpServletResponse response) {
-        List< Staff> listUser = StaffDAO.getAllstaff();
+        
     }
 }

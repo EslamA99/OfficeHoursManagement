@@ -4,8 +4,7 @@
     Author     : EEC
 --%>
 
-<%@page import="models.User"%>
-<%@page import="models.Student"%>
+
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -21,48 +20,8 @@
         <div class="area">
             <center>
                 <div id="formContent">
-                    <%
-                        Student student = (Student) request.getSession().getAttribute("currStudent");
-                        User user = student.getUser();
-                    %>
+                    
                     <form action="StudentHome.jsp" onsubmit="return validate()">
-
-                        <table>
-                            <tr>
-                                <td>
-                                    <label>Email: </label>
-                                </td>
-                                <td>
-                                    <input type="email" class="fadeIn second" id="email" name="email" placeholder="email" value=<%=user.getEmail()%> >
-                                </td>
-
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label>Password:</label>
-                                </td>
-                                <td>
-                                    <input type="text"  class="fadeIn second" id="password" name="password" placeholder="password" value=<%=user.getPassword()%> >
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label>Name: </label>
-                                </td>
-                                <td >
-                                    <input type="text"  class="fadeIn second" id="name" name="name" placeholder="name" value=<%=student.getName()%>>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <label>Phone: </label>
-                                </td>
-                                <td>
-                                    <input type="text"  class="fadeIn second" id="phone" name="phone" placeholder="phone" value=<%=student.getPhone()%>>
-                                </td>
-                            </tr>
-
-                        </table>
 
                         <input type="submit" class="fadeIn fourth" value="update">
 
@@ -114,9 +73,6 @@
         </nav>
         <script>
             function validate() {
-
-
-
                 let name = document.getElementById("name").value;
                 if (name == "") {
                     alert("name can't be empty");

@@ -4,17 +4,23 @@
  * and open the template in the editor.
  */
 
-import DAO.UserDAO;
+import SQL.SqlConnector;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import models.User;
 
 /**
  *
@@ -42,7 +48,7 @@ public class UserServlet extends HttpServlet {
             String action = request.getParameter("requestAction");
             switch (action) {
                 case "login":
-                    loginUser(request, response);
+                    loginUser(request, out, response);
                     break;
                 case "insert":
                     insertUser(request, response);
@@ -100,48 +106,57 @@ public class UserServlet extends HttpServlet {
         return "Short description";
     }// </editor-fold>
 
-    private void loginUser(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        String userName = request.getParameter("userName");
-        String password = request.getParameter("password");
+    private void loginUser(HttpServletRequest request, PrintWriter out, HttpServletResponse response) throws IOException {
+        try {
+            String userName = request.getParameter("userName");
+            String password = request.getParameter("password");
+            Connection connection = SqlConnector.getConnection();
+            Statement Stmt = null;
+            Statement Stmt2 = null;
+            ResultSet RS = null;
+            ResultSet RS2 = null;
+            //Stmt = connection.createStatement();
+            Stmt2 = connection.createStatement();
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM user WHERE user_name=? and password=?");
+            stmt.setString(1, userName);
+            stmt.setString(2, password);
+            RS = stmt.executeQuery();
 
-        User user = UserDAO.getUser(userName);
-        if (user != null) {
-            if (user.getPassword().equals(password)) {
-
-                if (user.getStudent() != null) {
-                    session.setAttribute("currStudent", user.getStudent());
+            //RS = Stmt.executeQuery("SELECT * FROM user WHERE '" + userName + "' = user.user_name and  '" + password + "' = user.password ;");
+            if (RS.next()) {
+                HttpSession session = request.getSession(true);
+                session.setAttribute("user_id", RS.getString("id"));
+                session.setAttribute("type", RS.getString("type"));
+                if(RS.getString("type").equals("student"))
                     response.sendRedirect("StudentHome.jsp");
-                } else {
-                    session.setAttribute("currStaff", user.getStaff());
+                else if(RS.getString("type").equals("staff"))
                     response.sendRedirect("StaffHome.jsp");
-                }
-            } else {//wrong pw
-
+            } else {
+                out.println("<script type=\"text/javascript\">");
+                out.println("alert('invalid user name or password');");
+                out.println("location='index.html';");
+                out.println("</script>");
             }
-        } else {//user name not found
 
+        } catch (SQLException ex) {
+            Logger.getLogger(UserServlet.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     private void insertUser(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
     }
 
     private void deleteUser(HttpServletRequest request, HttpServletResponse response) {
-        int userId = Integer.parseInt(request.getParameter("userId"));
-        if (UserDAO.deleteUser(userId)) {
 
-        } else {
-
-        }
     }
 
     private void updateUser(HttpServletRequest request, HttpServletResponse response) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+
     }
 
     private void getAllUsers(HttpServletRequest request, HttpServletResponse response) {
-        List<User> users = UserDAO.getAllUser();
+
     }
 
 }

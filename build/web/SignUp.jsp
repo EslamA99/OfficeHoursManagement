@@ -24,11 +24,13 @@
                 </div>
 
                 <!-- Login Form -->
-                <form action="SignUpServlet"  onsubmit="return validate()" method="post">
+                <form onsubmit="return validate(event)" method="post">
+                    <input type="hidden" id="type" name="type" value="student">
+                    <h3 style="color:red;" id="wrondValidate"></h3>
                     <input type="text" id="userName" class="fadeIn second" name="userName" placeholder="user name">
                     <input type="text" id="name" class="fadeIn second" name="name" placeholder="name">
                     <input type="email" id="email" class="fadeIn second" name="email" placeholder="email">
-                    <input type="text" id="phone" class="fadeIn second" name="phoneNumber" placeholder="phone number">
+                    <input type="text" id="phoneNumber" class="fadeIn second" name="phoneNumber" placeholder="phone number">
                     <center>
                         <div class="g-recaptcha"
                              data-sitekey="6LfVWxgaAAAAACSOibK-ELPpcIc49WKLnt2XYn0y"></div>
@@ -41,35 +43,36 @@
             </div>
         </div>
         <script>
-            function validate() {
-                
+            function validate(e) {
+                e.preventDefault();
+                var xhttp;
                 let userName = document.getElementById("userName").value;
-                if (userName == "") {
-                    alert("user name can't be empty");
-                    return false;
-                }
-                
                 let name = document.getElementById("name").value;
-                if (name == "") {
-                    alert("name can't be empty");
-                    return false;
-                }
-                
                 let email = document.getElementById("email").value;
-                if (email == "") {
-                    alert("email can't be empty");
-                    return false;
-                }
-                
-                let phone = document.getElementById("phone").value;
-                if (phone == "") {
-                    alert("phone can't be empty");
-                    return false;
-                }
-                
-                return true;
+                let phoneNumber = document.getElementById("phoneNumber").value;
+                var captcha=document.getElementById("g-recaptcha-response").value;
+                let type=document.getElementById("type").value;
+                xhttp = new XMLHttpRequest();
+                xhttp.onreadystatechange = function () {
+                    if (this.readyState == 4 && this.status == 200) {
+                        if(this.responseText=="wrong captcha"){
+                            alert("You are robot!");
+                            location.replace("SignUp.jsp");
+                        }
+                        else if(this.responseText=="go to login"){
+                            alert("signed up successfully");
+                            location.replace("index.html");
+                        }
+                        else{
+                            document.getElementById("wrondValidate").innerHTML = this.responseText;
+                        }
+                        
+                        
+                    }
+                };
+                xhttp.open("GET", "SignUpServlet?userName=" + userName +"&name=" + name + "&email=" + email + "&phoneNumber=" + phoneNumber+"&g-recaptcha-response="+captcha+"&type="+type, true);
+                xhttp.send();
             }
-
         </script>
     </body>
 </html>

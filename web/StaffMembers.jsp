@@ -4,16 +4,17 @@
     Author     : EEC
 --%>
 
+<%@page import="java.sql.ResultSet"%>
+<%@page import="java.sql.Statement"%>
+<%@page import="SQL.SqlConnector"%>
+<%@page import="java.sql.Connection"%>
 <%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
-<%@page import="DAO.StaffDAO"%>
-<%@page import="models.Staff"%>
 <%@page import="java.util.List"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
         <title>JSP Page</title>
         <link href="CSS/TableDesignCss.css" rel="stylesheet">
         <link href="CSS/HomePageCss.css" rel="stylesheet">
@@ -21,14 +22,10 @@
         <link href="CSS/SearchBarCss.css" rel="stylesheet">
     </head>
     <body>
-
         <div class="area">
-
             <center>
-
                 <div id="formContent"> 
-
-                    <h1>Staff Member</h1>
+                    <h1>Staff Members</h1>
                     <form method="post" onsubmit="showStaff(event)">
                         <div class="search">
                             <input type="text" id="staffName" class="searchTerm" placeholder="Find staff?">
@@ -45,28 +42,36 @@
                                 <tr>
                                     <th>Name
                                     <th>Email
+                                    <th>Dr/TA
                                     <th>Contact
                             </thead>
                             <tbody>
                                 <%
-                                    List<Staff> staffMembersList = StaffDAO.getAllstaff();
-                                    for (Staff staff : staffMembersList) {%>
+                                    Connection connection = SqlConnector.getConnection();
+                                    Statement Stmt = null;
+                                    Statement Stmt2 = null;
+                                    ResultSet RS = null;
+                                    ResultSet RS2 = null;
+                                    Stmt = connection.createStatement();
+                                    Stmt2 = connection.createStatement();
+                                    RS = Stmt.executeQuery("SELECT * FROM user WHERE user.type = 'staff' ");
+                                    while (RS.next()) {%>
                                 <tr>
-                                    <td><%= staff.getName()%>
-
-                                    <td><%= staff.getUser().getEmail()%>
-                                    <td><%= staff.getPhone()%>
+                                    <td><%= RS.getString("name")%>
+                                    <td><%= RS.getString("email")%>
+                                        <%
+                                            String id = RS.getString("id");
+                                            RS2 = Stmt2.executeQuery("SELECT * FROM staff WHERE '" + id + "' = staff.user_id");
+                                            RS2.next();
+                                        %>
+                                    <td><%= RS2.getString("staff_type")%>
+                                    <td><%= RS.getString("phone")%>
                                         <%}%>
-
                             </tbody>
                         </table>
                     </center>
                     <br/><br/>
-
-
-
                 </div>
-
             </center>
         </div>
         <nav class="main-menu">
@@ -78,7 +83,6 @@
                             Home
                         </span>
                     </a>
-
                 </li>
                 <li class="has-subnav">
                     <a href="StaffMembers.jsp">
