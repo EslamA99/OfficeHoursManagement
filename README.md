@@ -16,6 +16,7 @@ General Requirements:
 8. Every interaction from the user must be presented with a proper feedback from the system like success / failure messages, alert…etc. 
 
 There are two user groups which are “Students” and “Staff Members”.
+
 Students can:
   1. Find staff of each subject. 
   2. Find the contact for a specific staff member. 
@@ -24,7 +25,8 @@ Students can:
   5. Cancel a meeting reservation. 
   6. Message staff member of specific subject (specific TA, Dr or all subject Tas…etc.) directly.  
   7. Get notification on the day of the meeting by email (real email message – can use javamail or any other email libraries) and on the system. 
-  8. Get notification of a reservation cancellation same as requirement No.7 
+  8. Get notification of a reservation cancellation same as requirement No.7
+  
 Also Staff members can:
   1. View and reply to students’ messages. 
   2. Message specific student or other staff members. 
