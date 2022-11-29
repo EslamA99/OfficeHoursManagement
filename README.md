@@ -39,4 +39,8 @@ Also Staff members can:
   9. Get notifications of messages and students’ reservation by email (real email message – can use java mail or any other email libraries) and on the system. 
   10. Get notification of a reservation cancellation same as requirement No.8 
   11. Get notification on the day of the meeting same as requirement No.8 
+  
+This a picture of first page of the program (Welcome Page)
+  
+![Welcome Page](https://user-images.githubusercontent.com/36113402/204589158-77e9f003-6e29-4134-81fa-1dabf252d68a.PNG)
 
