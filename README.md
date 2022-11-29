@@ -40,7 +40,7 @@ Also Staff members can:
   10. Get notification of a reservation cancellation same as requirement No.8 
   11. Get notification on the day of the meeting same as requirement No.8 
   
-This a picture of first page of the program (Welcome Page)
+This a picture of first page of my program (Welcome Page)
   
 ![Welcome Page](https://user-images.githubusercontent.com/36113402/204589158-77e9f003-6e29-4134-81fa-1dabf252d68a.PNG)
 
